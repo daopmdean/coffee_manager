@@ -1,0 +1,12 @@
+<h1>Menu lists in here!</h1>
+
+<ul>
+    <% menu.forEach( (item) => { %>
+        <li><%= item %></li>
+    <% }); %>
+</ul>
+
+<form action="/addmenu" method="POST">
+    <input type="text" name="newcoffee" placeholder="coffee name">
+    <button>Create</button>
+</form>
