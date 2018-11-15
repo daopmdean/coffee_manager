@@ -1,12 +1,27 @@
-<h1>Menu lists in here!</h1>
+<% include partials/header %>
 
-<ul>
-    <% menu.forEach( (item) => { %>
-        <li><%= item %></li>
-    <% }); %>
-</ul>
+<div class="container">
+    
+    
+    
+    <header class="jumbotron">
+        <h1>Menu lists in here!</h1>  
+        <p>Take inspiration from all over the world!!!</p>
+        <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
+    </header>
+    
 
-<form action="/addmenu" method="POST">
-    <input type="text" name="newcoffee" placeholder="coffee name">
-    <button>Create</button>
-</form>
+    <div class="row" style="display: flex; flex-wrap: wrap;">
+        <% menu.forEach( (item) => { %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= item.image %>">  
+                    <h2 class="caption"><%= item.name %></h2>
+                </div>
+                
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include partials/footer %>
