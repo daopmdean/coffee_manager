@@ -1,17 +1,33 @@
-<% include partials/header %>
+<% include partials/_header %>
 <div class="container">
-    <h1>Add new coffee</h1>
+  <h1>Add new coffee</h1>
 
-    <form action="/menu" method="POST" style="width: 30%; margin: 20px; padding: 5px">
-        <div class="form-group">
-            <input class="form-control" type="text" name="newcoffee" placeholder="coffee name" required>    
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="text" name="image" placeholder="img url" required>    
-        </div>
-        <button class="form-control btn btn-primary">Create</button>
-    </form>
-    <a href="/menu">Back to menu</a>
+  <form
+    action="/menu"
+    method="POST"
+    style="width: 30%; margin: 20px; padding: 5px"
+  >
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="text"
+        name="newcoffee"
+        placeholder="coffee name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="text"
+        name="image"
+        placeholder="img url"
+        required
+      />
+    </div>
+    <button class="form-control btn btn-primary">Create</button>
+  </form>
+  <a href="/menu">Back to menu</a>
 </div>
 
-<% include partials/footer %>
+<% include partials/_footer %>

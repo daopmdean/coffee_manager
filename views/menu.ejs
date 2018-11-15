@@ -1,27 +1,22 @@
-<% include partials/header %>
+<% include partials/_header %>
 
 <div class="container">
-    
-    
-    
-    <header class="jumbotron">
-        <h1>Menu lists in here!</h1>  
-        <p>Take inspiration from all over the world!!!</p>
-        <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
-    </header>
-    
+  <header class="jumbotron">
+    <h1>Menu lists in here!</h1>
+    <p>Take inspiration from all over the world!!!</p>
+    <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
+  </header>
 
-    <div class="row" style="display: flex; flex-wrap: wrap;">
-        <% menu.forEach( (item) => { %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                    <img src="<%= item.image %>">  
-                    <h2 class="caption"><%= item.name %></h2>
-                </div>
-                
-            </div>
-        <% }); %>
+  <div class="row" style="display: flex; flex-wrap: wrap;">
+    <% menu.forEach( (item) => { %>
+    <div class="col-md-3 col-sm-6">
+      <div class="thumbnail">
+        <img src="<%= item.image %>" />
+        <h2 class="caption"><%= item.name %></h2>
+      </div>
     </div>
+    <% }); %>
+  </div>
 </div>
 
-<% include partials/footer %>
+<% include partials/_footer %>
