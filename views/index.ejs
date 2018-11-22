@@ -2,7 +2,7 @@
 
 <div class="container">
   <header class="jumbotron">
-    <h1>Menu lists in here!</h1>
+    <h1>--Menu</h1>
     <p>Take inspiration from all over the world!!!</p>
     <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
   </header>
@@ -13,6 +13,7 @@
       <div class="thumbnail">
         <img src="<%= item.image %>" />
         <h2 class="caption"><%= item.name %></h2>
+        <h4 class="caption">$<%= item.price %></h4>
         <a href="/menu/<%= item._id %>">More info</a>
       </div>
     </div>

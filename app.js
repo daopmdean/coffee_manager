@@ -7,7 +7,7 @@ const MONGODB_URL = "mongodb+srv://daopham:test123@learning-ublv7.mongodb.net/Co
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 var menuSchema = new mongoose.Schema({
@@ -45,7 +45,30 @@ app.get("/menu", (req, res) => {
       res.render("index", { menu: menuList });
     }
   });
-  
+});
+
+app.get("/purenode", (req, res) => {
+  res.write("<!DOCTYPE html>");
+  res.write("<html>");
+  res.write("<head>");
+  res.write("<title>Pure Node</title>");
+  res.write("</head>");
+  res.write("<body>");
+  res.write("<h1>Pure node</h1>");
+  res.write("</body>");
+  res.end("</html>");
+});
+
+app.get("/purenode2", (req, res) => {
+  res.end("<!DOCTYPE html>"
+           +         "<html>"
+           +         "<head>"
+           +         "<title>Pure Node</title>"
+           +         "</head>"
+           +         "<body>"
+           +         "<h1>Pure node 2</h1>"
+           +         "</body>"
+           +         "</html>");
 });
 
 app.get("/menu/new", (req, res) => {
@@ -65,7 +88,15 @@ app.get("/menu/:id", (req, res) => {
 app.post("/menu", (req, res) => {
   var coffee = req.body.newcoffee;
   var url = req.body.image;
-  var item = { name: coffee, image: url };
+  var des = req.body.description;
+  var price = req.body.price;
+  
+  var item = {
+     name: coffee,
+     image: url,
+     description: des,
+     price: price
+  };
 
   Menu.create(item, (err, item) => {
     if (err) {
