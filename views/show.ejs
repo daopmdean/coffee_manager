@@ -1,10 +1,22 @@
 <% include partials/_header %>
 
 <div class="container">
-    <h1><%= item.name %></h1>
-    <img src="<%= item.image %>">
-    <p><%= item.description %></p>
-    <p>Price: $<%= item.price %></p>
+    <div class="row">
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail" id="showinfo">
+                <img class="img-responsive" src="<%= item.image %>">
+                <div class="caption-full">
+                    <p class="pull-right">Price: $<%= item.price %></p>    
+                    <a href="#" style="font-size: 24px"><%= item.name %></a>
+                    <p><%= item.description %></p>
+                </div>            
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

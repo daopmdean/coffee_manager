@@ -4,7 +4,9 @@
   <header class="jumbotron">
     <h1>--Menu</h1>
     <p>Take inspiration from all over the world!!!</p>
-    <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
+    <% if (currentUser) { %>
+      <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
+    <% } %>
   </header>
 
   <div class="row" style="display: flex; flex-wrap: wrap;">
