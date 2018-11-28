@@ -4,10 +4,15 @@
   <header class="jumbotron">
     <h1>--Menu</h1>
     <p>Take inspiration from all over the world!!!</p>
-    <% if (currentUser) { %>
+    <% if (currentUser && currentUser.isAdmin) { %>
       <a class="btn btn-primary" href="/menu/new">Add new coffee</a>
     <% } %>
+      <a class="btn btn-primary" href="/order">Make an order</a>
   </header>
+  
+  <form>
+    <input type="hidden" name="prodId1" value="1">
+  </form>
 
   <div class="row" style="display: flex; flex-wrap: wrap;">
     <% menu.forEach( (item) => { %>
@@ -22,5 +27,14 @@
     <% }); %>
   </div>
 </div>
+
+<script>
+  function add() {
+    console.log("added function");
+  }
+  function myFunc() {
+    alert("Hello!");
+  }
+</script>
 
 <% include partials/_footer %>

@@ -2,8 +2,16 @@
     width: 100%;
 }
 
+body {
+    margin-top: 65px;
+}
 #showinfo {
     padding: 0px;
+}
+
+#orderForm {
+    position: fixed;
+    right: 20px;
 }
 
 .thumbnail .caption-full {

@@ -1,12 +1,15 @@
 const path = require("path"),
       express = require("express"),
       passport = require("passport"),
-      User       = require("./models/user"),
       LocalStrategy = require("passport-local"),
       passportLocalmongoose = require("passport-local-mongoose"),
       bodyParser = require("body-parser"),
       mongoose = require("mongoose"),
-      Menu = require("./models/Menu");
+      User = require("./models/user"),
+      Menu = require("./models/Menu"),
+      Order = require("./models/order"),
+      Contact = require("./models/contact");
+      
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -91,6 +94,40 @@ app.get("/menu/:id", (req, res) => {
   });
 });
 
+app.get("/order", isLoggedInOrder, (req, res) => {
+  Menu.find({}, (err, menuList) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("order", { menu: menuList });
+    }
+  });
+});
+
+app.post("/order", isLoggedIn, (req, res) => {
+  var name = req.body.name;
+  var address = req.body.address;
+  var phone = req.body.phone;
+  var des = req.body.description;
+  var order = req.body.order;
+
+  var order = {
+    name: name,
+    address: address,
+    phone: phone,
+    description: des,
+    order: order
+  };
+
+  Order.create(order, (err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/menu");
+    }
+  });
+});
+
 app.get("/register", (req, res) => {
   res.render("register");
 });
@@ -112,11 +149,30 @@ app.get("/login", (req, res) => {
    res.render("login"); 
 });
 
+app.get("/loginOrder", (req, res) => {
+   res.render("loginOrder"); 
+});
+
+app.get("/loginContact", (req, res) => {
+   res.render("loginContact"); 
+});
+
 app.post("/login", passport.authenticate("local", {
     successRedirect: "/menu",
     failureRedirect: "/login"
 }), (req, res) => {
-    
+});
+
+app.post("/loginOrder", passport.authenticate("local", {
+    successRedirect: "/order",
+    failureRedirect: "/login"
+}), (req, res) => {
+});
+
+app.post("/loginContact", passport.authenticate("local", {
+    successRedirect: "/contact",
+    failureRedirect: "/login"
+}), (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
@@ -124,11 +180,49 @@ app.get("/logout", (req, res) => {
    res.redirect("/menu"); 
 });
 
+app.get("/contact", isLoggedInContact, (req, res) => {
+  res.render("contact");
+});
+
+app.post("/contact", isLoggedIn, (req, res) => {
+  var name = req.body.name;
+  var email = req.body.email;
+  var des = req.body.description;
+
+  var item = {
+    fullName: name,
+    email: email,
+    description: des
+  };
+
+  Contact.create(item, (err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/menu");
+    }
+  });
+});
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
     res.redirect("/login");
+}
+
+function isLoggedInOrder(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/loginOrder");
+}
+
+function isLoggedInContact(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/loginContact");
 }
 
 if (process.env.IP) {

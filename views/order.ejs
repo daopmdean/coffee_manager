@@ -1,0 +1,69 @@
+<% include partials/_header %>
+
+<div class="container">
+  
+  <div class="row" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-9 col-sm-6">
+        <% menu.forEach( (item) => { %>
+          <div class="thumbnail">
+            <h2 class="caption"><%= item.name %></h2>
+            <button id="<%= item._id %>" class="pull-right" onclick="myFunc()"><i class="glyphicon glyphicon-plus"></i></button>
+            <h4 class="caption">$<%= item.price %></h4>
+            <!--<h4 class="caption">$ item._id </h4>-->
+          </div>
+        <% }); %>
+    </div>
+    
+    <div class="col-md-3" id="orderForm">
+        <form class="" action="/order" method="POST">
+            <h2>Order form</h2>
+            <div class="form-group">
+                <input type="text" name="name" placeholder=" your name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="address" placeholder=" address" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="phone" placeholder=" phone number" required>
+            </div>
+            <div class="form-group">
+                <input type="textarea" name="description" placeholder=" description" required>
+            </div>
+            <div class="form-group">
+                <input id="orderInInput" type="hidden" name="order" required>
+            </div>
+            <h4 id="specialh4">Your order:<span id="total-money">  $0</span></h4>
+                <ul id="orderInH4" style="list-style-type:none">
+                    
+                </ul>
+            <button type="submit" class="btn btn-success">Order</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  let items = [];
+  let totalPrice = 0;
+  function add() {
+    console.log("added function");
+  }
+  
+  function myFunc() {
+    // document.getElementById('orderID').innerHTML = "<li>Hello!</li>";
+    console.log("hello");
+  }
+  
+  <% menu.forEach( (item) => { %> 
+      $("#<%= item._id %>").click(function(){
+        $("#orderInH4").append("<li><%= item.name %>  $<%= item.price %></li>");
+        $('#orderInInput').val($('#orderInInput').val() + '<%= item.name %> ' + '<%= item.price %>' + "\t");
+        totalPrice += <%= item.price %>;
+        totalPrice = Math.round(totalPrice * 100) / 100;
+        document.getElementById('total-money').innerHTML = "  $" + totalPrice;
+      })
+  <% }); %>
+  
+</script>
+
+<% include partials/_footer %>
