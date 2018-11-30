@@ -59,29 +59,6 @@ app.use(indexRoutes);
 app.use(orderRoutes);
 app.use(contactRoutes);
 
-// Order.create({
-//   name: "How the rain fall",
-//   address:"112d3sa",
-//   phone:"12d3as12",
-//   description:"d12sa1d3as",
-//   order:"White coffee 2.99"  
-// }, (err, post) => {
-//     if (err) {
-//     }
-//     User.findOne({username: "alex"}, (err, foundUser) => {
-//       if(err) {
-//           console.log(err);
-//       } 
-//       foundUser.orders.push(post);
-//       foundUser.save((err, data) => {
-//           if (err) {
-               
-//           }
-//           console.log(data);
-//       });
-//     });
-// });
-
 if (process.env.IP) {
   app.listen(port, process.env.IP, () => {
     console.log("Server running on c9");

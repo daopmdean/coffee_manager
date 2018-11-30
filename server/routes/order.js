@@ -2,17 +2,31 @@ const express = require("express");
 const router = express.Router();
 const Menu = require("../models/Menu");
 const Order = require("../models/order");
+const User = require("../models/user");
 const middleware = require("../middleware");
 
 
 router.get("/order", middleware.isLoggedInOrder, (req, res) => {
+  // User.findById(req.params.id, (err, user) => {
+  //   if(err) {
+  //     console.log(err);
+  //   } else {
+  //     Menu.find({}, (err, menuList) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         res.render("order", { menu: menuList });
+  //       }
+  //     });
+  //   }
+  // });
   Menu.find({}, (err, menuList) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("order", { menu: menuList });
-    }
-  });
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("order", { menu: menuList });
+        }
+      });
 });
 
 router.post("/order", middleware.isLoggedIn, (req, res) => {
@@ -29,13 +43,22 @@ router.post("/order", middleware.isLoggedIn, (req, res) => {
     description: des,
     order: orderP
   };
-
-  Order.create(order, (err, item) => {
-    if (err) {
-      console.log(err); 
+  
+  User.findById(req.params.id, (err, user) => {
+    if(err) {
+      console.log(err);
+      res.redirect("/index");
     } else {
-      req.flash("orderSuccess", "Your order has been submitted, check it in your profile.");
-      res.redirect("/menu");
+      Order.create(order, (err, item) => {
+        if (err) {
+          console.log(err); 
+        } else {
+          user.orders.push(item);
+          user.save();
+          req.flash("orderSuccess", "Your order has been submitted, check it in your profile.");
+          res.redirect("/menu");
+        }
+      });
     }
   });
 });

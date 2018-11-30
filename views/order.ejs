@@ -15,7 +15,7 @@
     </div>
     
     <div class="col-md-3" id="orderForm">
-        <form class="" action="/order" method="POST">
+        <form class="" action="/user/<%= currentUser._id %>/order" method="POST">
             <h2>Order form</h2>
             <div class="form-group">
                 <input type="text" name="name" placeholder=" your name" required>

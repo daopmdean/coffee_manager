@@ -70,15 +70,40 @@ router.get("/user/:id", (req, res) => {
     }
     res.render("userInfo", { user: foundUser });
   });
-//   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
-//         if(err){
-//             console.log(err);
-//         } else {
-//             console.log(foundCampground)
-//             //render show template with that campground
-//             res.render("show", {campground: foundCampground});
-//         }
-//     });
+});
+
+router.post("/user/:id/order", middleware.isLoggedIn, (req, res) => {
+  var name = req.body.name;
+  var address = req.body.address;
+  var phone = req.body.phone;
+  var des = req.body.description;
+  var orderP = req.body.order;
+
+  var order = {
+    name: name,
+    address: address,
+    phone: phone,
+    description: des,
+    order: orderP
+  };
+  
+  User.findById(req.params.id, (err, user) => {
+    if(err) {
+      console.log(err);
+      res.redirect("/index");
+    } else {
+      Order.create(order, (err, item) => {
+        if (err) {
+          console.log(err); 
+        } else {
+          user.orders.push(item);
+          user.save();
+          req.flash("orderSuccess", "Your order has been submitted, check it in your profile.");
+          res.redirect("/menu");
+        }
+      });
+    }
+  });
 });
 
 router.get("/admin", middleware.isAdmin, (req, res) => {
