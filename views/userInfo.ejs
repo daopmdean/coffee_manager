@@ -6,7 +6,18 @@
             <h1 style="text-transform: capitalize;"><%= currentUser.username %>'s profile</h1>
         </div>
         <div class="col-md-9">
-            <h1>Your orders:</h1>        
+            <h1>Your orders:</h1>    
+            <% user.orders.forEach(function(order) { %>
+                <div class="thumbnail">
+                    <ul>
+                        <li>Name: <%= order.name %></li>
+                        <li>Address: <%= order.address %></li>
+                        <li>Phone: <%= order.phone %></li>
+                        <li>Des: <%= order.description %></li>
+                        <li>Order: <%= order.order %></li>    
+                    </ul>
+                </div>
+            <% }); %>
         </div>
     </div>
 </div>

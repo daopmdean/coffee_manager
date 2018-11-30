@@ -7,7 +7,7 @@
         <% menu.forEach( (item) => { %>
           <div class="thumbnail">
             <h2 class="caption"><%= item.name %></h2>
-            <button id="<%= item._id %>" class="pull-right" onclick="myFunc()"><i class="glyphicon glyphicon-plus"></i></button>
+            <button id="<%= item._id %>" class="pull-right"><i class="glyphicon glyphicon-plus"></i></button>
             <h4 class="caption">$<%= item.price %></h4>
             <!--<h4 class="caption">$ item._id </h4>-->
           </div>
@@ -30,10 +30,10 @@
                 <input type="textarea" name="description" placeholder=" description" required>
             </div>
             <div class="form-group">
-                <input id="orderInInput" type="hidden" name="order" required>
+                <input id="orderListInHiddenForm" type="hidden" name="order" required>
             </div>
-            <h4 id="specialh4">Your order:<span id="total-money">  $0</span></h4>
-                <ul id="orderInH4" style="list-style-type:none">
+            <h4 id="specialh4">Your order: $<span id="total-money">0</span></h4>
+                <ul id="orderList" style="list-style-type:none">
                     
                 </ul>
             <button type="submit" class="btn btn-success">Order</button>
@@ -43,24 +43,59 @@
 </div>
 
 <script>
-  let items = [];
-  let totalPrice = 0;
-  function add() {
-    console.log("added function");
+  const menu = <%- JSON.stringify(menu) %>;
+  
+  let itemIdsInCart = [];
+  
+  function findItem(id) {
+    for (let i = 0; i < menu.length; i++) {
+      if (menu[i]._id === id) return menu[i];
+    }
+    return {};
   }
   
-  function myFunc() {
-    // document.getElementById('orderID').innerHTML = "<li>Hello!</li>";
-    console.log("hello");
+  function recalculateTotalPrice() {
+    let totalPrice = 0;
+    
+    for (let i = 0; i < itemIdsInCart.length; i++) {
+      const itemPrice = findItem(itemIdsInCart[i]).price;
+      totalPrice += itemPrice;
+    }
+    
+    totalPrice = Math.round(totalPrice * 100) / 100;
+    return totalPrice;
+  }
+  
+  function convertitemIdsInCartToDisplayable(itemsList) {
+    const result = {};
+    
+    for (let i = 0; i < itemsList.length; i++) {
+      result[itemsList[i]] = result[itemsList[i]] ? result[itemsList[i]] + 1 : 1;
+    }
+    
+    return result;
+  }
+  
+  function reprintitemIdsInCart(itemIdsInCartToDisplay) {
+    $("#orderList").empty();
+    
+    for (let key in itemIdsInCartToDisplay) {
+      const item = findItem(key);
+      $("#orderList").append("<li> x" + itemIdsInCartToDisplay[key] + " " + item.name + " $" +  item.price  + "</li>");
+    }
   }
   
   <% menu.forEach( (item) => { %> 
-      $("#<%= item._id %>").click(function(){
-        $("#orderInH4").append("<li><%= item.name %>  $<%= item.price %></li>");
-        $('#orderInInput').val($('#orderInInput').val() + '<%= item.name %> ' + '<%= item.price %>' + "\t");
-        totalPrice += <%= item.price %>;
-        totalPrice = Math.round(totalPrice * 100) / 100;
-        document.getElementById('total-money').innerHTML = "  $" + totalPrice;
+      $("#<%= item._id %>").click(function() {
+        itemIdsInCart.push("<%= item._id %>");
+        
+        const totalPrice = recalculateTotalPrice();
+        document.getElementById('total-money').innerHTML = totalPrice;
+        
+        const itemIdsInCartToDisplay = convertitemIdsInCartToDisplayable(itemIdsInCart);
+        reprintitemIdsInCart(itemIdsInCartToDisplay);
+        
+        $('#orderListInHiddenForm').val($('#orderListInHiddenForm').val() + '<%= item.name %> ' + '<%= item.price %>' + "\t");
       })
   <% }); %>
   

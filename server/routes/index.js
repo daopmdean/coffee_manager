@@ -64,12 +64,21 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/user/:id", (req, res) => {
-  User.findById(req.params.id, (err, foundUser) => {
+  User.findById(req.params.id).populate("orders").exec((err, foundUser) => {
     if(err) {
       res.redirect("/menu");
     }
     res.render("userInfo", { user: foundUser });
   });
+//   Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+//         if(err){
+//             console.log(err);
+//         } else {
+//             console.log(foundCampground)
+//             //render show template with that campground
+//             res.render("show", {campground: foundCampground});
+//         }
+//     });
 });
 
 router.get("/admin", middleware.isAdmin, (req, res) => {
