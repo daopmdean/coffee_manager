@@ -1,0 +1,26 @@
+<% include partials/_header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Admin site</h1>        
+            <h1>Customer's orders</h1>    
+              <div class="row" style="display: flex; flex-wrap: wrap;">
+                <% orders.forEach( (order) => { %>
+                <div class="col-md-4 col-sm-6">
+                  <div class="thumbnail">
+                    <h2 class="caption">Name:<%= order.name %></h2>
+                    <h2 class="caption">Address:<%= order.address %></h2>
+                    <h4 class="caption">Phone: <%= order.phone %></h4>
+                    <h4 class="caption">Des: <%= order.description %></h4>
+                    <h4 class="caption">Order: <%= order.order %></h4>
+                  </div>
+                </div>
+                <% }); %>
+              </div>
+        </div>
+    </div>
+</div>
+
+
+<% include partials/_footer %>

@@ -33,11 +33,14 @@
             <li><a href="/">Home</a></li>
             <li><a href="/menu">Menu</a></li>
             <li><a href="/order">Order</a></li>
+            <% if (currentUser && currentUser.isAdmin) { %>
+              <li><a href="/admin">Admin</a></li>
+            <% } %>
           </ul>
           
           <ul class="nav navbar-nav navbar-right">
             <% if (currentUser) { %>
-              <li><a href="#">Sign in as <%= currentUser.username %></a></li>
+              <li><a href="/user/<%= currentUser._id %>">Sign in as <%= currentUser.username %></a></li>
             <% } %>
             <li class="dropdown">
               <a
@@ -64,4 +67,30 @@
         </div>
       </div>
     </nav>
+    
+    <div class = "container">
+      <% if(error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+          <%= error %>
+        </div>    
+      <% } %>
+      
+      <% if(logoutSuccess && logoutSuccess.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+          <%= logoutSuccess %>
+        </div>    
+      <% } %>
+      
+      <% if(orderSuccess && orderSuccess.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+          <%= orderSuccess %>
+        </div>    
+      <% } %>
+      
+      <% if(contactSuccess && contactSuccess.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+          <%= contactSuccess %>
+        </div>    
+      <% } %>
+    </div>
   
