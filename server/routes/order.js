@@ -5,7 +5,6 @@ const Order = require("../models/order");
 const User = require("../models/user");
 const middleware = require("../middleware");
 
-
 router.get("/order", middleware.isLoggedInOrder, (req, res) => {
   // User.findById(req.params.id, (err, user) => {
   //   if(err) {
@@ -59,6 +58,16 @@ router.post("/order", middleware.isLoggedIn, (req, res) => {
           res.redirect("/menu");
         }
       });
+    }
+  });
+});
+
+router.delete("/:id", (req, res) => {
+  Order.findByIdAndRemove(req.params.id, (err) => {
+    if(err) {
+      res.redirect("/menu");
+    } else {
+      res.redirect("/admin");
     }
   });
 });

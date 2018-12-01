@@ -14,6 +14,12 @@
                     <h4 class="caption">Phone: <%= order.phone %></h4>
                     <h4 class="caption">Des: <%= order.description %></h4>
                     <h4 class="caption">Order: <%= order.order %></h4>
+                    <p class="caption" id="deliveredStatus">
+                      <i id="<%= order._id %>"class="glyphicon glyphicon-send"></i> Delivered: <%= order.delivered %>
+                    </p>
+                    <form action="/<%= order._id %>?_method=DELETE" method="POST">
+                      <button class="btn btn-danger">Delete</button>
+                    </form>
                   </div>
                 </div>
                 <% }); %>
@@ -22,5 +28,12 @@
     </div>
 </div>
 
+<script>
+  <% orders.forEach( (order) => { %> 
+    $("#<%= order._id %>").click(function() {
+      console.log("click");
+    });
+  <% }); %>
+</script>
 
 <% include partials/_footer %>

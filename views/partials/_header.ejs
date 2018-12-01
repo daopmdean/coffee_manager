@@ -34,7 +34,10 @@
             <li><a href="/menu">Menu</a></li>
             <li><a href="/order">Order</a></li>
             <% if (currentUser && currentUser.isAdmin) { %>
-              <li><a href="/admin">Admin</a></li>
+              <li><a href="/admin">Views Orders</a></li>
+            <% } %>
+            <% if (currentUser && currentUser.isAdmin) { %>
+              <li><a href="/contactAdmin">Views Contacts</a></li>
             <% } %>
           </ul>
           

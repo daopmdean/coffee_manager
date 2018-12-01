@@ -9,7 +9,8 @@ const path                  = require("path"),
       User                  = require("./models/user"),
       Menu                  = require("./models/Menu"),
       Order                 = require("./models/order"),
-      Contact               = require("./models/contact");
+      Contact               = require("./models/contact"),
+      methodOverride        = require("method-override");
       
 const menuRoutes    = require("./routes/menu");
 const indexRoutes   = require("./routes/index");
@@ -44,6 +45,7 @@ app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use(flash());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
+app.use(methodOverride("_method"));
 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;

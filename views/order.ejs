@@ -85,19 +85,21 @@
     }
   }
   
-  <% menu.forEach( (item) => { %> 
-      $("#<%= item._id %>").click(function() {
-        itemIdsInCart.push("<%= item._id %>");
+  for (let i = 0; i < menu.length; i++) {
+    const item = menu[i];
+    
+    $("#" + item._id).click(function() {
+      itemIdsInCart.push(item._id);
         
-        const totalPrice = recalculateTotalPrice();
-        document.getElementById('total-money').innerHTML = totalPrice;
-        
-        const itemIdsInCartToDisplay = convertitemIdsInCartToDisplayable(itemIdsInCart);
-        reprintitemIdsInCart(itemIdsInCartToDisplay);
-        
-        $('#orderListInHiddenForm').val($('#orderListInHiddenForm').val() + '<%= item.name %> ' + '<%= item.price %>' + "\t");
-      })
-  <% }); %>
+      const totalPrice = recalculateTotalPrice();
+      document.getElementById('total-money').innerHTML = totalPrice;
+      
+      const itemIdsInCartToDisplay = convertitemIdsInCartToDisplayable(itemIdsInCart);
+      reprintitemIdsInCart(itemIdsInCartToDisplay);
+      
+      $('#orderListInHiddenForm').val($('#orderListInHiddenForm').val() + item.name + ' ' + item.price + "\t");
+    });
+  }
   
 </script>
 

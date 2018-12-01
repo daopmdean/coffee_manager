@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
 const Order = require("../models/order");
+const Contact = require("../models/contact");
 const middleware = require("../middleware");
 
 router.get("/", (req, res) => {
@@ -112,6 +113,16 @@ router.get("/admin", middleware.isAdmin, (req, res) => {
       console.log(err);
     } else {
       res.render("admin", { orders: orderList });
+    }
+  });
+});
+
+router.get("/contactAdmin", middleware.isAdmin, (req, res) => {
+    Contact.find({}, (err, contactList) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("contactAdmin", { contacts: contactList });
     }
   });
 });

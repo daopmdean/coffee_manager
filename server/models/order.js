@@ -6,7 +6,8 @@ const orderSchema = new mongoose.Schema({
   address: String,
   phone: String,
   description: String,
-  order: String
+  order: String,
+  delivered: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model("Order", orderSchema);
