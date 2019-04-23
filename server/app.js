@@ -1,11 +1,11 @@
 const path                  = require("path"),
       express               = require("express"),
-      passport              = require("passport"),
+      passport              = require("passport"), // middleware xac thuc nguoi dung
       flash                 = require("connect-flash"),
       LocalStrategy         = require("passport-local"),
       passportLocalmongoose = require("passport-local-mongoose"),
-      bodyParser            = require("body-parser"),
-      mongoose              = require("mongoose"),
+      bodyParser            = require("body-parser"), // lay body req
+      mongoose              = require("mongoose"), // thu vien ket noi mongodb
       User                  = require("./models/user"),
       Menu                  = require("./models/Menu"),
       Order                 = require("./models/order"),
